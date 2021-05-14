@@ -1,0 +1,19 @@
+package com.alessandrajulia.apirestful.service;
+
+import com.alessandrajulia.apirestful.domain.User;
+import com.alessandrajulia.apirestful.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public List<User> findAll(){
+        return userRepository.findAll();
+    }
+}
