@@ -1,5 +1,6 @@
 package com.alessandrajulia.apirestful.resources;
 
+import com.alessandrajulia.apirestful.domain.Post;
 import com.alessandrajulia.apirestful.domain.User;
 import com.alessandrajulia.apirestful.dto.UserDTO;
 import com.alessandrajulia.apirestful.services.UserService;
@@ -52,5 +53,11 @@ public class UserResource {
         obj.setId(id);
         service.update(obj);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 }
