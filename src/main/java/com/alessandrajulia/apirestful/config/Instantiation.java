@@ -2,6 +2,7 @@ package com.alessandrajulia.apirestful.config;
 
 import com.alessandrajulia.apirestful.domain.Post;
 import com.alessandrajulia.apirestful.domain.User;
+import com.alessandrajulia.apirestful.dto.AuthorDTO;
 import com.alessandrajulia.apirestful.repository.PostRepository;
 import com.alessandrajulia.apirestful.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,11 @@ public class Instantiation implements CommandLineRunner {
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
-        Post p1 = new Post(null, LocalDate.of(2021, 3, 21), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", maria);
-        Post p2 = new Post(null, LocalDate.of(2021, 3, 23), "Bom dia", "Acordei feliz hoje!", maria);
-
         userRepository.saveAll(Arrays.asList(maria,alex,bob));
+
+        Post p1 = new Post(null, LocalDate.of(2021, 3, 21), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
+        Post p2 = new Post(null, LocalDate.of(2021, 3, 23), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
+
         postRepository.saveAll(Arrays.asList(p1,p2));
     }
 }
