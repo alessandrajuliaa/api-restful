@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserResource {
 
     @Autowired
@@ -32,17 +32,25 @@ public class UserResource {
         return ResponseEntity.ok().body(new UserDTO(obj));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id){
-        service.delete(id);
-        return ResponseEntity.noContent().build();
-    }
-
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody UserDTO objDTO){
         User obj = service.fromDTO(objDTO);
         service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable String id, @RequestBody UserDTO objDTO){
+        User obj = service.fromDTO(objDTO);
+        obj.setId(id);
+        service.update(obj);
+        return ResponseEntity.noContent().build();
     }
 }
