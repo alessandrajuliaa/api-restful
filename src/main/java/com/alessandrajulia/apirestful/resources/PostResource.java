@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static com.alessandrajulia.apirestful.resources.util.URL.decodeDate;
 
 
 @RestController
@@ -43,9 +46,8 @@ public class PostResource {
             @RequestParam(value = "minDate", defaultValue = "") String minDate,
             @RequestParam(value = "maxDate", defaultValue = "") String maxDate){
         text = URL.decodeParam(text);
-        LocalDate min = URL.decodeDate(minDate, LocalDate.EPOCH);
-        LocalDate max = URL.decodeDate(maxDate, LocalDate.now());
-
+        Date min = URL.decodeDate(minDate, new Date(0L));
+        Date max = URL.decodeDate(maxDate, new Date());
 
         List<Post> list = repository.searchTextDate(text, min, max);
         return ResponseEntity.ok().body(list);

@@ -10,13 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 @Configuration
 public class Instantiation implements CommandLineRunner {
@@ -25,6 +21,8 @@ public class Instantiation implements CommandLineRunner {
     private UserRepository userRepository;
     @Autowired
     private PostRepository postRepository;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     @Override
     public void run(String... args) throws Exception {
@@ -37,8 +35,8 @@ public class Instantiation implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(maria,alex,bob));
 
-        Post p1 = new Post(null, LocalDate.of(2021, 3, 21), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
-        Post p2 = new Post(null, LocalDate.of(2021, 3, 23), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
+        Post p1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
+        Post p2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
 
         CommentDTO c1 = new CommentDTO("Boa viagem mano!", LocalDate.of(2018,3,21), new AuthorDTO((alex)));
         CommentDTO c2 = new CommentDTO("Aproveite!", LocalDate.of(2018,3,22), new AuthorDTO((bob)));

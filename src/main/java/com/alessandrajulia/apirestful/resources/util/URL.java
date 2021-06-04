@@ -4,7 +4,10 @@ import org.springframework.expression.ParseException;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class URL {
 
@@ -16,10 +19,12 @@ public class URL {
         }
     }
 
-    public static LocalDate decodeDate(String textDate, LocalDate defaultValue){
+    public static Date decodeDate(String textDate, Date defaultValue){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
         try {
-            return LocalDate.parse(textDate);
-        } catch (ParseException e) {
+            return sdf.parse(textDate);
+        } catch (ParseException | java.text.ParseException e) {
             return defaultValue;
         }
     }
